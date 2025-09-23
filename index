@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《九章算术》与《几何原本》对比研究</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2C3E50',
+                        secondary: '#7F8C8D',
+                        accent: '#C0392B',
+                        light: '#ECF0F1',
+                        dark: '#1A252F',
+                        gold: '#D4AF37',
+                        paper: '#F5F1E8'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif'],
+                        mono: ['Noto Sans Mono', 'monospace']
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-texture {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .chapter-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .chapter-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-paper bg-texture text-primary">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-primary/95 text-light shadow-md backdrop-blur-sm">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa fa-book text-gold text-2xl mr-3"></i>
+                <h1 class="text-xl md:text-2xl font-serif font-bold">《九章算术》与《几何原本》研究</h1>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-light focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+            <nav id="main-nav" class="hidden md:flex w-full md:w-auto mt-3 md:mt-0">
+                <ul class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
+                    <li><a href="#intro" class="hover:text-gold transition-colors duration-200">引言</a></li>
+                    <li><a href="#jiuzhang-content" class="hover:text-gold transition-colors duration-200">九章算术内容</a></li>
+                    <li><a href="#comparison" class="hover:text-gold transition-colors duration-200">中西对比</a></li>
+                    <li><a href="#influence" class="hover:text-gold transition-colors duration-200">历史影响</a></li>
+                    <li><a href="#euclid-future" class="hover:text-gold transition-colors duration-200">欧氏几何未来</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="relative bg-primary text-light py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1073/1600/900')] bg-cover bg-center"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 text-shadow">
+                    古代东西方数学的智慧结晶
+                </h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-8 leading-relaxed">
+                    《九章算术》与《几何原本》分别代表了古代中国与西方数学的最高成就，
+                    它们的思想与方法深刻影响了人类文明的发展轨迹。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#jiuzhang-content" class="bg-gold hover:bg-gold/90 text-dark font-semibold py-3 px-6 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        探索九章算术 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#comparison" class="bg-transparent border-2 border-light hover:border-gold hover:text-gold font-semibold py-3 px-6 rounded-md transition-all duration-300">
+                        对比分析 <i class="fa fa-balance-scale ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-paper to-transparent"></div>
+    </section>
+
+    <!-- 引言部分 -->
+    <section id="intro" class="py-16 container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">数学史上的双璧</h2>
+                <div class="w-24 h-1 bg-gold mx-auto"></div>
+            </div>
+            <div class="prose prose-lg max-w-none text-primary/90">
+                <p class="text-lg leading-relaxed mb-6">
+                    数学作为人类理性思维的最高成就之一，在不同文明中形成了各具特色的发展路径。
+                    中国古代的《九章算术》与古希腊的《几何原本》正是这两条路径的杰出代表，
+                    它们不仅总结了当时的数学知识，更奠定了东西方数学发展的范式基础。
+                </p>
+                <p class="text-lg leading-relaxed">
+                    《九章算术》以解决实际问题为导向，形成了以算法为核心的数学体系；
+                    而《几何原本》则以公理化方法为基础，构建了严密的演绎逻辑体系。
+                    这两部著作虽然风格迥异，却共同推动了人类对宇宙规律的理解，
+                    并对后世的科学、技术、文化乃至社会结构产生了深远影响。
+                </p>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-calculator text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-3">《九章算术》</h3>
+                        <p class="text-secondary">
+                            成书于公元1世纪下半叶（东汉时期），是中国古代数学体系的奠基之作，
+                            收录246道与生产、生活紧密相关的应用题，按解题方法和应用场景分为九大类。
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-cubes text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-3">《几何原本》</h3>
+                        <p class="text-secondary">
+                            约公元前300年由古希腊数学家欧几里得所著，是西方数学的奠基之作，
+                            以公理化体系为基础，通过严密的逻辑推理构建了完整的几何学体系。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 《九章算术》的主要内容 -->
+    <section id="jiuzhang-content" class="py-16 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">《九章算术》的主要内容详解</h2>
+                <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-secondary text-lg">
+                    《九章算术》采用问题集体例，共收录246道与生产、生活紧密相关的应用题，
+                    按解题方法和应用场景分为九大类，系统总结了先秦至两汉时期的数学成就。
+                </p>
+            </div>
+
+            <!-- 九章内容卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- 第一章：方田 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第一章：方田</h3>
+                        <p class="text-light/80 text-sm">土地测量与面积计算</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>系统阐述分数运算规则（加减乘除、约分、通分）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>各种平面图形的面积计算（长方形、正方形、三角形等）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>圆形面积："半周半径相乘得积步"（S=πrl）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：解决"按田征税"需求，是分数运算的首次系统总结</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第二章：粟米 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第二章：粟米</h3>
+                        <p class="text-light/80 text-sm">粮食交易与比例换算</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>以"粟米之法"（20种粮食的兑换比例表）为基础</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>系统讲解比例算法（今有术）："以所有数乘所求率为实..."</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>解决粮食兑换、物资分配的实际问题</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：世界上最早的比例算法体系之一</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第三章：衰分 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第三章：衰分</h3>
+                        <p class="text-light/80 text-sm">分配问题与比例分配</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>"衰分"即"按比例分配"，包括正比例和反比例分配</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>提出"衰分术"和"返衰术"（反比例分配）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>实例：按爵级分配猎物，体现社会等级制度</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：解决资源按等级、人口、工作量分配的问题</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第四章：少广 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第四章：少广</h3>
+                        <p class="text-light/80 text-sm">开方与开立方</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>"少广"即"由面积或体积求边长"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>系统阐述整数开平方、开立方的算法</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>开方术采用"筹算迭代法"，步骤与现代笔算开方一致</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：世界上最早的系统开方算法，比西方早数百年</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第五章：商功 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第五章：商功</h3>
+                        <p class="text-light/80 text-sm">工程体积与工作量计算</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>以"土方工程"为核心，计算各种立体图形的体积</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>涉及柱体、锥体、台体、楔体等多种形状</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>长方体体积："方自乘，以高乘之，即积尺"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：服务于古代水利、建筑、城防工程的计算需求</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第六章：均输 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第六章：均输</h3>
+                        <p class="text-light/80 text-sm">赋税摊派与行程问题</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>"均输"即"平均输送"，解决赋税摊派问题</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>处理行程、工程效率的比例问题</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>通过"均输率"计算各地区的赋税分摊</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：体现"均平赋税"的治理思想，应用于国家财政管理</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第七章：盈不足 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第七章：盈不足</h3>
+                        <p class="text-light/80 text-sm">盈亏问题与近似求解</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>解决"已知两种尝试方案的盈亏，求未知数"的问题</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>"盈不足术"可延伸为线性问题的近似求解</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>通过两次尝试用盈不足术逼近答案</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：世界上最早的线性插值法，比西方早约1000年</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第八章：方程 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第八章：方程</h3>
+                        <p class="text-light/80 text-sm">多元一次方程组与正负数</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>"方程"即"方形之算"，阐述多元一次方程组的解法</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>首次明确提出正负数的运算规则（"正负术"）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>用"筹算矩阵"表示方程组，通过"消元法"求解</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：正负数运算的提出是中国古代数学的重大突破</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 第九章：勾股 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="bg-primary text-light p-4">
+                        <h3 class="text-xl font-serif font-bold">第九章：勾股</h3>
+                        <p class="text-light/80 text-sm">勾股定理与测量问题</p>
+                    </div>
+                    <div class="p-5">
+                        <ul class="space-y-3 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>以"勾股定理"为基础，解决直角三角形的边长计算</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>勾股定理："勾股各自乘，并而开方除之，即弦"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-gold mt-1 mr-2"></i>
+                                <span>解决"测高望远"的实际测量问题（测山高、河宽等）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-lightbulb-o text-primary mt-1 mr-2"></i>
+                                <span>意义：为古代天文、地理提供了核心数学工具</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 对比部分 -->
+    <section id="comparison" class="py-16 container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">《九章算术》与《几何原本》的异同</h2>
+            <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+            <p class="max-w-3xl mx-auto text-secondary text-lg">
+                两部著作分别代表了古代东西方数学的两种核心范式，
+                从体例、逻辑、内容、思想到应用都展现出鲜明的特色。
+            </p>
+        </div>
+
+        <!-- 相同点 -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <h3 class="text-2xl font-serif font-bold mb-6 text-center">相同点：数学史上的奠基性地位</h3>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <div class="bg-primary/10 rounded-full p-2 mr-4 mt-1">
+                            <i class="fa fa-cube text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">均为体系化著作</h4>
+                            <p class="text-secondary">二者均非零散的数学知识点集合，而是构建了完整的数学框架，成为后世数学教育和研究的"范本"。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-primary/10 rounded-full p-2 mr-4 mt-1">
+                            <i class="fa fa-sitemap text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">均包含逻辑推理</h4>
+                            <p class="text-secondary">虽推理方式不同，但都注重"从已知到未知"的逻辑推导，形成了各自的推理体系。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-primary/10 rounded-full p-2 mr-4 mt-1">
+                            <i class="fa fa-cogs text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">均服务于实际需求</h4>
+                            <p class="text-secondary">《九章算术》服务于农业、赋税、工程，《几何原本》的最初应用也包括土地测量、建筑设计，均源于解决实际问题的需求。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 不同点 -->
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-2xl font-serif font-bold mb-8 text-center">不同点：东西方数学的范式差异</h3>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr class="bg-primary text-light">
+                            <th class="py-4 px-6 text-left">对比维度</th>
+                            <th class="py-4 px-6 text-left">《九章算术》（中国）</th>
+                            <th class="py-4 px-6 text-left">《几何原本》（古希腊）</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">体例结构</td>
+                            <td class="py-4 px-6">"问题集体例"：按应用场景分类，以"题—答—术"为单元，无统一公理体系。</td>
+                            <td class="py-4 px-6">"公理化体例"：按逻辑层次分类（定义—公理—定理—推论），从公理出发推导所有定理。</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">逻辑体系</td>
+                            <td class="py-4 px-6">"归纳逻辑为主"：通过大量同类问题总结"术"（算法通则），强调算法的通用性。</td>
+                            <td class="py-4 px-6">"演绎逻辑为主"：从公认的公理出发，通过严格的逻辑证明推导定理，强调每一步都需基于前序公理。</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">内容侧重</td>
+                            <td class="py-4 px-6">"以代数为主，几何为辅"：核心是分数运算、比例、方程、正负数，几何服务于实际测量。</td>
+                            <td class="py-4 px-6">"以几何为主，代数为辅"：核心是平面几何、立体几何，代数问题通过几何图形表示。</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">数学思想</td>
+                            <td class="py-4 px-6">"实用主义思想"：数学的核心价值是"解决问题"，算法设计以"高效、可操作"为目标。</td>
+                            <td class="py-4 px-6">"理性主义思想"：数学的核心价值是"探索真理"，强调"理论的严密性"，需通过逻辑证明确认普遍性。</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">符号与表达</td>
+                            <td class="py-4 px-6">"筹算符号系统"：用算筹表示数字和方程，无抽象的数学符号，运算依赖实物操作。</td>
+                            <td class="py-4 px-6">"几何符号系统"：用字母表示点、线、面，建立了抽象的符号体系，推理依赖符号化的逻辑表达。</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6 font-bold">核心突破</td>
+                            <td class="py-4 px-6">正负数运算、多元一次方程组消元法、盈不足术（代数领域的实用算法）。</td>
+                            <td class="py-4 px-6">公理化体系、三角形全等/相似判定、圆锥曲线理论（几何领域的理论框架）。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 可视化对比图表 -->
+            <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+                <h4 class="text-xl font-bold mb-6 text-center">两部著作的特点对比</h4>
+                <div class="h-80">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 影响部分 -->
+    <section id="influence" class="py-16 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">《九章算术》对中国古代社会的影响</h2>
+                <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-secondary text-lg">
+                    《九章算术》不仅是一部数学著作，更是古代中国"技术—制度—文化"的交汇点，
+                    其影响渗透到社会生产、国家治理、科技发展、文化思想等多个层面。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- 对生产实践的影响 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-industry text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-4">对生产实践的影响</h3>
+                        <h4 class="font-bold text-primary mb-2">农业领域</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            "方田"章的面积计算直接用于"按田征税"和"土地分配"，帮助政府精准统计耕地面积，避免赋税不均。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">工程领域</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            "商功"章的体积计算是古代水利、建筑、城防的"数学基础"，工匠通过"商功术"计算土方量、材料用量，精准规划工期和人力。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">商业领域</h4>
+                        <p class="text-secondary text-sm md:text-base">
+                            "粟米""衰分"章的比例算法用于商品交易，"均输"章的行程问题用于运输成本核算，推动了汉代以后"丝绸之路"上的商业往来。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 对国家治理的影响 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-balance-scale text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-4">对国家治理的影响</h3>
+                        <h4 class="font-bold text-primary mb-2">赋税制度</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            "均输"章的"均输术"是汉代"均输法"的数学依据，政府通过"均输术"按各县的人口、距离、物价分摊赋税，避免不公平。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">财政管理</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            "方程"章的方程组解法用于国家财政的"收支平衡"计算，"盈不足"章的近似求解用于赋税、粮食储备的估算。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">户籍与土地管理</h4>
+                        <p class="text-secondary text-sm md:text-base">
+                            "方田"章的面积计算是古代"户籍制度"和"土地制度"的基础，确保"有田即有户，有户即有税"。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 对科技发展的影响 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-rocket text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-4">对科技发展的影响</h3>
+                        <h4 class="font-bold text-primary mb-2">天文历法</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            古代天文观测依赖"勾股"章的测量术；历法编制需用"方程"章的正负数运算、"少广"章的开方术计算日月运行周期。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">地理与地图</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            西晋裴秀"制图六体"中的"分率"（比例尺）、"准望"（方位）依赖"粟米"章的比例算法和"勾股"章的测量术。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">手工业技术</h4>
+                        <p class="text-secondary text-sm md:text-base">
+                            唐代《考工记》中，兵器、器物的尺寸设计需用"衰分"章的比例分配；宋代沈括"隙积术"是对"商功"章体积算法的延伸。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 对文化与教育的影响 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-graduation-cap text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-4">对文化与教育的影响</h3>
+                        <h4 class="font-bold text-primary mb-2">教育体系</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            自唐代起，《九章算术》成为国子监"算学馆"的核心教材，宋代以后纳入科举考试，培养了大量懂数学的官员。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">文化思想</h4>
+                        <p class="text-secondary mb-3 text-sm md:text-base">
+                            《九章算术》的"实用主义"思想深刻影响了中国古代文化，中国古代科技多以"解决实际问题"为目标，这种"经世致用"的思想源头之一便是《九章算术》。
+                        </p>
+                        <h4 class="font-bold text-primary mb-2">数学传承</h4>
+                        <p class="text-secondary text-sm md:text-base">
+                            后世数学家均以《九章算术》为"母本"进行创新，形成了中国古代数学"以《九章》为核心，不断迭代"的传承脉络。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 欧氏几何公理化方法的影响 -->
+    <section class="py-16 container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">欧氏几何公理化方法的核心内涵与影响</h2>
+            <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+            <p class="max-w-3xl mx-auto text-secondary text-lg">
+                欧式几何公理化方法并非历史遗产，而是支撑当代文明的"逻辑基石"，
+                其影响渗透数学、科技、教育、文化等核心领域。
+            </p>
+        </div>
+
+        <div class="max-w-5xl mx-auto">
+            <!-- 公理化方法本质 -->
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8 mb-10">
+                <h3 class="text-2xl font-serif font-bold mb-4 flex items-center">
+                    <i class="fa fa-cube text-gold mr-3"></i>公理化方法本质
+                </h3>
+                <p class="text-secondary mb-4">
+                    以原始概念（如"点""线""面"）、不证自明的公理/公设（如《几何原本》5条公设）为基础，
+                    通过严格演绎推理（三段论、反证法）构建知识体系，需满足希尔伯特"相容性、独立性、完备性"三大准则。
+                </p>
+            </div>
+
+            <!-- 多领域影响 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 数学领域 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="p-5 bg-primary text-light">
+                        <h3 class="text-xl font-serif font-bold flex items-center">
+                            <i class="fa fa-area-chart mr-3"></i>数学领域
+                        </h3>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-secondary mb-4">
+                            公理化方法是当代数学统一性与严谨性的核心保障，推动各分支从"经验总结"升华为"理论科学"。
+                        </p>
+                        <ul class="space-y-2 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>代数领域：群论以4条公理定义"群"，环论、域论均效仿公理化框架</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>拓扑学领域：通过"开集公理"定义"拓扑空间"，统一研究几何图形的"连续变换"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>概率论领域：柯尔莫哥洛夫建立5条公理，使概率论从"统计经验"变为严谨数学分支</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 科技领域 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="p-5 bg-primary text-light">
+                        <h3 class="text-xl font-serif font-bold flex items-center">
+                            <i class="fa fa-microchip mr-3"></i>科技领域
+                        </h3>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-secondary mb-4">
+                            公理化方法为当代技术提供"确定性保障"，从建筑工程到人工智能，其逻辑严谨性贯穿技术研发全流程。
+                        </p>
+                        <ul class="space-y-2 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>建筑与工程：结构安全与美学的统一，如哥特拱、四心拱的尺寸计算</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>物理学与宇宙探索：广义相对论以黎曼几何为数学基础</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>人工智能与计算机科学：程序验证基于"Hoare逻辑"证明程序正确性</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 教育领域 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="p-5 bg-primary text-light">
+                        <h3 class="text-xl font-serif font-bold flex items-center">
+                            <i class="fa fa-book mr-3"></i>教育领域
+                        </h3>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-secondary mb-4">
+                            当代数学教育仍以欧式几何公理化体系为核心，承载"逻辑推理、空间想象、数学抽象"等核心素养的培养。
+                        </p>
+                        <ul class="space-y-2 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>课程体系：公理化逻辑贯穿教材设计，从公理出发推导各种定理</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>教师发展：学习欧式几何公理化史后，教师弱化"工具主义观"，强化"柏拉图主义观"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>培养理性思维：通过几何证明，培养"质疑—论证—反驳"的理性习惯</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 文化与社会领域 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card">
+                    <div class="p-5 bg-primary text-light">
+                        <h3 class="text-xl font-serif font-bold flex items-center">
+                            <i class="fa fa-users mr-3"></i>文化与社会领域
+                        </h3>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-secondary mb-4">
+                            公理化方法已超越数学范畴，成为当代社会"理性认知"的文化符号，推动跨领域共识与文明互鉴。
+                        </p>
+                        <ul class="space-y-2 text-sm md:text-base">
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>理性精神的普及：抵御伪科学与模糊思维，成为公众辨别信息真伪的工具</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>法律与政策制定：法律条文的"法条→判例"逻辑隐含公理化思想</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-angle-right text-gold mt-1 mr-2"></i>
+                                <span>跨文明数学文化的融合：中算与欧式几何公理化的结合成为当代数学教育特色</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 欧氏几何：通向未来的钥匙 -->
+    <section id="euclid-future" class="py-16 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">欧氏几何：通向未来的钥匙</h2>
+                <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-secondary text-lg">
+                    欧氏几何作为人类历史上最古老且影响深远的数学体系之一，其价值早已超越了几何学本身，
+                    成为推动科学、技术、教育和社会发展的核心力量。
+                </p>
+            </div>
+
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 数学基础与科学思维 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card flex flex-col h-full">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-lightbulb-o text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-serif font-bold mb-4">数学基础与科学思维</h3>
+                        <p class="text-secondary text-sm md:text-base mb-4">
+                            欧氏几何的公理化方法是现代数学的范本，培养了人类的理性思维能力。在未来，无论是人工智能的算法设计还是量子力学的理论探索，逻辑推理始终是解决复杂问题的核心工具。
+                        </p>
+                        <p class="text-secondary text-sm md:text-base">
+                            即使在量子力学中，波函数的正交性和概率计算仍需借助欧氏空间的数学框架，体现了欧氏几何在基础科学中的不可替代性。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 技术创新与工程实践 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card flex flex-col h-full">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-cogs text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-serif font-bold mb-4">技术创新与工程实践</h3>
+                        <p class="text-secondary text-sm md:text-base mb-4">
+                            在工程领域，欧氏几何的精确性和可操作性使其成为优化设计的关键。3D打印技术通过欧氏几何建模实现个性化制造，自动驾驶汽车的路径规划依赖于对道路几何结构的实时分析。
+                        </p>
+                        <p class="text-secondary text-sm md:text-base">
+                            在计算机科学中，欧氏几何是图形学、虚拟现实（VR）和增强现实（AR）的基础，从游戏渲染到工业设计均基于欧氏几何原理。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 教育体系与人才培养 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card flex flex-col h-full">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-graduation-cap text-6xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-serif font-bold mb-4">教育体系与人才培养</h3>
+                        <p class="text-secondary text-sm md:text-base mb-4">
+                            欧氏几何在数学教育中的地位不可动摇。其定理证明过程不仅能培养学生的逻辑推理能力，还能激发他们对数学美的感知。勾股定理的证明方法超过300种，展示了不同的思维路径。
+                        </p>
+                        <p class="text-secondary text-sm md:text-base">
+                            未来教育中，欧氏几何可能与AI技术深度融合，通过虚拟几何实验室让学生直观理解抽象概念，个性化地指导几何证明练习。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 社会理性与制度构建 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card flex flex-col h-full">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-balance-scale text-5xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-serif font-bold mb-4">社会理性与制度构建</h3>
+                        <p class="text-secondary text-sm md:text-base mb-4">
+                            欧氏几何的逻辑严谨性为社会科学提供了方法论启示。法律体系的条文设计和司法推理遵循类似公理化的结构：宪法作为"公理"，衍生出具体法律条款，最终通过判例法实现逻辑自洽。
+                        </p>
+                        <p class="text-secondary text-sm md:text-base">
+                            在文化层面，欧氏几何的美学价值持续影响着艺术创作。从文艺复兴时期的透视绘画到现代主义建筑，几何图形的比例与对称始终是审美判断的重要标准。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 应对未来挑战的基础支撑 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden chapter-card flex flex-col h-full">
+                    <div class="h-40 bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-rocket text-5xl text-primary/70"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-serif font-bold mb-4">应对未来挑战的基础支撑</h3>
+                        <p class="text-secondary text-sm md:text-base mb-4">
+                            在可持续发展领域，欧氏几何的应用同样关键。水利工程中的水坝设计需通过几何计算确保结构安全，太阳能板的布局优化依赖于对阳光入射角的几何分析。
+                        </p>
+                        <p class="text-secondary text-sm md:text-base">
+                            面对太空探索的挑战，欧氏几何的空间测量和轨道计算仍是基础。卫星的轨道参数需通过欧氏几何公式计算，行星际探测器的路径规划需结合非欧几何与欧氏几何的混合模型。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 结语 -->
+            <div class="max-w-4xl mx-auto mt-12 bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-2xl font-serif font-bold mb-4 text-center">结语</h3>
+                <p class="text-secondary text-lg leading-relaxed text-center">
+                    欧氏几何不仅是人类文明的宝贵遗产，更是通向未来的钥匙。其逻辑思维、空间概念和公理化方法，
+                    将持续影响数学、科学、技术和社会的发展。在人工智能、量子计算和太空探索的新时代，
+                    欧氏几何的价值并未减弱，反而通过与新技术的融合展现出更强的生命力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 总结部分 -->
+    <section class="py-16 container mx-auto px-4">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-3xl font-serif font-bold mb-6 text-center">总结</h2>
+            <div class="prose prose-lg max-w-none text-primary/90">
+                <p class="mb-4">
+                    《九章算术》是中国古代数学的"百科全书"，其核心价值在于"将数学与社会需求深度绑定"——它不仅提供了分数、方程、正负数等领先世界的算法，更通过"问题集"体例将数学转化为国家治理、生产实践的"工具"。
+                </p>
+                <p class="mb-4">
+                    与《几何原本》的"公理化理论体系"不同，《九章算术》代表了"实用导向的算法体系"，二者分别塑造了东西方数学的不同路径。《几何原本》的公理化方法为现代科学提供了逻辑基础，而《九章算术》的实用思想则展现了数学服务于社会的直接价值。
+                </p>
+                <p>
+                    对当代而言，这两种数学传统并非对立，而是互补的。将公理化的严谨性与算法的实用性相结合，正是现代数学发展的重要方向，也是应对未来科技与社会挑战的关键所在。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-light py-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <div class="flex items-center">
+                            <i class="fa fa-book text-gold text-2xl mr-3"></i>
+                            <h2 class="text-xl font-serif font-bold">《九章算术》与《几何原本》研究</h2>
+                        </div>
+                        <p class="mt-2 text-light/70">探索古代东西方数学智慧的结晶</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#intro" class="hover:text-gold transition-colors duration-200">
+                            <i class="fa fa-home text-xl"></i>
+                        </a>
+                        <a href="#jiuzhang-content" class="hover:text-gold transition-colors duration-200">
+                            <i class="fa fa-list text-xl"></i>
+                        </a>
+                        <a href="#comparison" class="hover:text-gold transition-colors duration-200">
+                            <i class="fa fa-exchange text-xl"></i>
+                        </a>
+                        <a href="#influence" class="hover:text-gold transition-colors duration-200">
+                            <i class="fa fa-history text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-light/20 mt-8 pt-8 text-center text-light/60">
+                    <p>© 2023 古代数学典籍研究 | 基于《九章算术》与《几何原本》的比较研究</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-gold text-dark w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 opacity-0 translate-y-10">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const nav = document.getElementById('main-nav');
+            nav.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                document.getElementById('main-nav').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'translate-y-10');
+                backToTopButton.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'translate-y-0');
+                backToTopButton.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 对比图表
+        const ctx = document.getElementById('comparisonChart').getContext('2d');
+        const comparisonChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '实用性', 
+                    '逻辑严谨性', 
+                    '理论深度', 
+                    '应用广度', 
+                    '教育价值',
+                    '算法先进性'
+                ],
+                datasets: [
+                    {
+                        label: '《九章算术》',
+                        data: [95, 70, 65, 90, 75, 85],
+                        backgroundColor: 'rgba(44, 62, 80, 0.2)',
+                        borderColor: 'rgba(44, 62, 80, 1)',
+                        pointBackgroundColor: 'rgba(44, 62, 80, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(44, 62, 80, 1)'
+                    },
+                    {
+                        label: '《几何原本》',
+                        data: [65, 95, 90, 70, 90, 60],
+                        backgroundColor: 'rgba(192, 57, 43, 0.2)',
+                        borderColor: 'rgba(192, 57, 43, 1)',
+                        pointBackgroundColor: 'rgba(192, 57, 43, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(192, 57, 43, 1)'
+                    }
+                ]
+            },
+            options: {
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+        // 滚动动画
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.chapter-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('opacity-100', 'translate-y-0');
+                    element.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        };
+        
+        // 初始设置
+        document.querySelectorAll('.chapter-card').forEach(card => {
+            card.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-700');
+        });
+        
+        // 初始加载和滚动时触发动画
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
