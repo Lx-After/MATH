@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧式几何对人类社会的影响</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2d3748',    // 深灰主色调，线条感
+                        secondary: '#4a5568',  // 次要灰色
+                        accent: '#3182ce',     // 强调蓝色
+                        light: '#f7fafc',      // 浅色背景
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .line-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232d3748' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+            .line-border {
+                border-image: linear-gradient(to right, transparent, #2d3748, transparent) 1;
+            }
+            .timeline-line {
+                @apply absolute left-5 top-0 bottom-0 w-0.5 bg-primary/30;
+            }
+            .timeline-dot {
+                @apply absolute left-5 top-6 w-3 h-3 rounded-full bg-primary -translate-x-1/2;
+            }
+            .section-divider {
+                @apply w-32 h-px bg-gradient-to-r from-transparent via-primary to-transparent mx-auto my-12;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+            }
+            .geometric-card {
+                @apply border border-primary/20 bg-white p-6 relative overflow-hidden;
+            }
+            .geometric-card::before {
+                content: '';
+                @apply absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-accent;
+            }
+            .geometric-card::after {
+                content: '';
+                @apply absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-accent;
+            }
+        }
+    </style>
+    
+    <!-- 引入字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans text-primary bg-light line-pattern">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-primary/10 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 flex items-center justify-center border-2 border-primary">
+                        <i class="fa fa-cube text-primary text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl">欧式几何的影响</span>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#intro" class="text-primary/80 hover:text-accent transition-colors relative group">
+                        基础理论
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#history" class="text-primary/80 hover:text-accent transition-colors relative group">
+                        历史演进
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#applications" class="text-primary/80 hover:text-accent transition-colors relative group">
+                        应用领域
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#impact" class="text-primary/80 hover:text-accent transition-colors relative group">
+                        社会影响
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#future" class="text-primary/80 hover:text-accent transition-colors relative group">
+                        未来展望
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menuBtn" class="md:hidden text-primary focus:outline-none">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-primary/10">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#intro" class="py-2 hover:text-accent transition-colors border-b border-primary/5">基础理论</a>
+                <a href="#history" class="py-2 hover:text-accent transition-colors border-b border-primary/5">历史演进</a>
+                <a href="#applications" class="py-2 hover:text-accent transition-colors border-b border-primary/5">应用领域</a>
+                <a href="#impact" class="py-2 hover:text-accent transition-colors border-b border-primary/5">社会影响</a>
+                <a href="#future" class="py-2 hover:text-accent transition-colors">未来展望</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-32 px-4 relative overflow-hidden">
+        <!-- 装饰线条 -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 border-2 border-primary/10"></div>
+            <div class="absolute top-1/4 left-1/4 w-80 h-80 border-2 border-primary/10"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 border-2 border-primary/10"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-48 h-48 border-2 border-primary/10"></div>
+            <div class="absolute top-1/2 left-1/2 w-128 h-128 -translate-x-1/2 -translate-y-1/2 border-2 border-accent/10 transform rotate-45"></div>
+        </div>
+        
+        <div class="container mx-auto relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="w-20 h-px bg-primary/30 mx-auto mb-8"></div>
+                <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
+                    欧式几何如何塑造<br class="md:hidden">人类文明的发展
+                </h1>
+                <div class="w-20 h-px bg-primary/30 mx-auto mb-10"></div>
+                <p class="text-lg md:text-xl text-secondary mb-10 max-w-3xl mx-auto">
+                    从古希腊的《几何原本》到现代科技革命，欧式几何的公理化体系与逻辑思维
+                    深刻影响了科学、艺术、工程和社会的各个方面。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#intro" class="px-8 py-3 bg-primary text-white hover:bg-primary/90 transition-colors border border-primary">
+                        开始探索
+                    </a>
+                    <a href="#applications" class="px-8 py-3 bg-transparent text-primary border border-primary hover:bg-primary/5 transition-colors">
+                        查看应用
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 几何线条动画 -->
+            <div class="mt-16 relative h-64 md:h-80">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <canvas id="geometryCanvas" class="w-full h-full max-w-2xl mx-auto"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 基础理论部分 -->
+    <section id="intro" class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">欧式几何的基础理论</h2>
+                <p class="text-secondary text-lg">欧几里得在《几何原本》中建立的公理体系，为后世的数学与科学发展奠定了基础</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-6 text-primary border-b border-primary/10 pb-3">五大公理体系</h3>
+                        <ul class="space-y-6">
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 flex items-center justify-center border border-primary mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-primary font-medium">1</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">从任一点到任一点可以引一条直线</h4>
+                                    <p class="text-secondary text-sm mt-1">两点确定一条直线，是最基本的几何概念</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 flex items-center justify-center border border-primary mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-primary font-medium">2</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">有限的直线可以无限延长</h4>
+                                    <p class="text-secondary text-sm mt-1">直线没有边界，可以无限延伸</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 flex items-center justify-center border border-primary mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-primary font-medium">3</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">以任一点为中心，任意距离可以画圆</h4>
+                                    <p class="text-secondary text-sm mt-1">圆的定义基于圆心和半径</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 flex items-center justify-center border border-primary mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-primary font-medium">4</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">所有直角都相等</h4>
+                                    <p class="text-secondary text-sm mt-1">直角是几何测量的基准</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 flex items-center justify-center border border-primary mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-primary font-medium">5</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">平行公设</h4>
+                                    <p class="text-secondary text-sm mt-1">通过直线外一点，有且仅有一条直线与已知直线平行</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-4 text-primary border-b border-primary/10 pb-3">公理化方法的意义</h3>
+                        <p class="text-secondary">
+                            欧式几何的核心贡献不仅在于其几何知识，更在于它创立的公理化方法——从少量不证自明的公理出发，
+                            通过严格的逻辑推理，建立完整的知识体系。这种方法成为现代科学研究的标准范式。
+                        </p>
+                    </div>
+                    
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-4 text-primary border-b border-primary/10 pb-3">《几何原本》的历史地位</h3>
+                        <p class="text-secondary">
+                            欧几里得的《几何原本》是除《圣经》外，人类历史上传播最广、影响最深远的著作。
+                            它被翻译成多种语言，在不同文明中传播，成为培养逻辑思维的基础教材。
+                        </p>
+                    </div>
+                    
+                    <div class="relative border-2 border-primary/20 p-1">
+                        <img src="https://picsum.photos/id/1025/600/400" alt="几何原本手稿" class="w-full h-auto">
+                        <div class="absolute -bottom-3 -right-3 bg-white border border-primary/20 px-4 py-2">
+                            <p class="text-sm font-medium">《几何原本》手稿复刻</p>
+                            <p class="text-xs text-secondary">约公元前300年</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史演进时间线 -->
+    <section id="history" class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">欧式几何的历史演进</h2>
+                <p class="text-secondary text-lg">从古希腊到现代，欧式几何思想的传播与发展历程</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto relative">
+                <!-- 时间线 -->
+                <div class="timeline-line"></div>
+                
+                <!-- 时间点1：古希腊时期 -->
+                <div class="relative pl-16 pb-16 md:pb-24">
+                    <div class="timeline-dot"></div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="font-display font-semibold text-xl text-primary">古希腊时期</h3>
+                            <span class="text-secondary text-sm mt-1 md:mt-0">公元前300年左右</span>
+                        </div>
+                        <p class="text-secondary">
+                            欧几里得在亚历山大图书馆完成《几何原本》，系统整理了前人的几何知识，建立了完整的公理化体系。
+                            这本书成为此后两千多年几何学的标准教材。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 时间点2：中世纪传播 -->
+                <div class="relative pl-16 pb-16 md:pb-24">
+                    <div class="timeline-dot"></div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="font-display font-semibold text-xl text-primary">中世纪传播</h3>
+                            <span class="text-secondary text-sm mt-1 md:mt-0">8-13世纪</span>
+                        </div>
+                        <p class="text-secondary">
+                            阿拉伯学者翻译并保存了《几何原本》，在伊斯兰世界传播几何知识。12世纪后，
+                            拉丁文译本传入欧洲，成为大学教育的核心内容，推动了欧洲学术复兴。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 时间点3：科学革命 -->
+                <div class="relative pl-16 pb-16 md:pb-24">
+                    <div class="timeline-dot"></div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="font-display font-semibold text-xl text-primary">科学革命</h3>
+                            <span class="text-secondary text-sm mt-1 md:mt-0">16-17世纪</span>
+                        </div>
+                        <p class="text-secondary">
+                            欧式几何的公理化方法影响了伽利略、牛顿等科学家。牛顿的《自然哲学的数学原理》
+                            采用几何方法阐述力学定律，将物理世界的规律以数学形式表达。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 时间点4：非欧几何的诞生 -->
+                <div class="relative pl-16 pb-16 md:pb-24">
+                    <div class="timeline-dot"></div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="font-display font-semibold text-xl text-primary">非欧几何的诞生</h3>
+                            <span class="text-secondary text-sm mt-1 md:mt-0">19世纪</span>
+                        </div>
+                        <p class="text-secondary">
+                            数学家们通过修改第五公设，发展出非欧几何（罗氏几何、黎曼几何），
+                            这些新几何体系后来成为爱因斯坦相对论的数学基础，展示了欧式几何的深远影响。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 时间点5：现代应用 -->
+                <div class="relative pl-16">
+                    <div class="timeline-dot"></div>
+                    <div class="geometric-card rounded-none card-hover">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="font-display font-semibold text-xl text-primary">现代应用</h3>
+                            <span class="text-secondary text-sm mt-1 md:mt-0">20-21世纪</span>
+                        </div>
+                        <p class="text-secondary">
+                            欧式几何在计算机图形学、建筑设计、航天工程、地理信息系统等领域得到广泛应用，
+                            成为现代科技发展的基础工具之一。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 应用领域部分 -->
+    <section id="applications" class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">欧式几何的应用领域</h2>
+                <p class="text-secondary text-lg">从科学研究到日常生活，几何原理无处不在</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- 建筑领域 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1076/600/400" alt="建筑设计中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-building text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">建筑设计</h3>
+                    <p class="text-secondary text-sm">
+                        建筑中的对称性、比例和空间结构设计都基于几何原理，从古代神庙到现代建筑，
+                        几何形状的应用创造了既美观又实用的空间。
+                    </p>
+                </div>
+                
+                <!-- 科学研究 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1074/600/400" alt="科学研究中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-flask text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">科学研究</h3>
+                    <p class="text-secondary text-sm">
+                        物理学、天文学和化学等领域广泛应用几何原理描述自然现象，
+                        从行星轨道到分子结构，几何提供了理解自然的基础框架。
+                    </p>
+                </div>
+                
+                <!-- 艺术创作 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1050/600/400" alt="艺术中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-paint-brush text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">艺术创作</h3>
+                    <p class="text-secondary text-sm">
+                        文艺复兴时期的艺术家运用透视几何原理革新绘画技法，现代艺术中几何形状
+                        成为重要表现元素，创造出独特的视觉体验。
+                    </p>
+                </div>
+                
+                <!-- 工程技术 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1059/600/400" alt="工程中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-cogs text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">工程技术</h3>
+                    <p class="text-secondary text-sm">
+                        机械设计、桥梁建造和航空航天等工程领域依赖精确的几何计算，
+                        确保结构稳定和功能实现。
+                    </p>
+                </div>
+                
+                <!-- 计算机图形 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1002/600/400" alt="计算机图形中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-laptop text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">计算机图形</h3>
+                    <p class="text-secondary text-sm">
+                        3D建模、动画和游戏开发基于几何原理构建虚拟世界，
+                        欧式几何是计算机图形学的数学基础。
+                    </p>
+                </div>
+                
+                <!-- 导航定位 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="h-48 overflow-hidden border-b border-primary/10 mb-5">
+                        <img src="https://picsum.photos/id/1015/600/400" alt="导航中的几何应用" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center border border-primary mb-5">
+                        <i class="fa fa-compass text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">导航定位</h3>
+                    <p class="text-secondary text-sm">
+                        地图绘制、GPS导航和测绘学依赖几何测量技术，
+                        帮助人们准确定位和导航。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 应用领域图表 -->
+            <div class="mt-16 max-w-4xl mx-auto geometric-card rounded-none">
+                <h3 class="font-display font-semibold text-xl mb-6 text-center">欧式几何在各领域的应用频率</h3>
+                <div class="h-80">
+                    <canvas id="applicationsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社会影响部分 -->
+    <section id="impact" class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">对社会的深远影响</h2>
+                <p class="text-secondary text-lg">欧式几何如何塑造人类的思维方式和社会发展</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div class="space-y-8">
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-5 text-primary flex items-center border-b border-primary/10 pb-3">
+                            <div class="w-10 h-10 flex items-center justify-center border border-primary mr-3">
+                                <i class="fa fa-lightbulb-o text-primary"></i>
+                            </div>
+                            理性思维的培养
+                        </h3>
+                        <p class="text-secondary mb-4">
+                            欧式几何的公理化方法培养了人类的逻辑推理能力和理性思维方式，这种思维方式
+                            不仅应用于数学和科学领域，还影响了哲学、法律和社会科学等多个领域。
+                        </p>
+                        <p class="text-secondary">
+                            通过学习几何证明，人们学会了从公理出发，通过严格推理得出结论的思维方式，
+                            这种思维方式成为现代科学方法的基础。
+                        </p>
+                    </div>
+                    
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-5 text-primary flex items-center border-b border-primary/10 pb-3">
+                            <div class="w-10 h-10 flex items-center justify-center border border-primary mr-3">
+                                <i class="fa fa-graduation-cap text-primary"></i>
+                            </div>
+                            教育体系的基础
+                        </h3>
+                        <p class="text-secondary mb-4">
+                            几千年来，欧式几何一直是教育体系的重要组成部分，被视为培养逻辑思维和空间想象力的
+                            有效工具。从古希腊的学园到现代学校，几何教育塑造了无数代人的思维方式。
+                        </p>
+                        <p class="text-secondary">
+                            许多著名科学家和思想家都将几何学习视为其智力发展的重要阶段，几何训练培养的
+                            思维能力帮助他们在各自领域取得突破。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-5 text-primary flex items-center border-b border-primary/10 pb-3">
+                            <div class="w-10 h-10 flex items-center justify-center border border-primary mr-3">
+                                <i class="fa fa-cogs text-primary"></i>
+                            </div>
+                            技术革新的推动力
+                        </h3>
+                        <p class="text-secondary mb-4">
+                            几何知识的应用直接推动了多项技术革新，从文艺复兴时期的建筑技术到工业革命时期的
+                            机械设计，再到现代的计算机图形和航天技术，几何原理都发挥了关键作用。
+                        </p>
+                        <p class="text-secondary">
+                            许多技术突破都源于对几何问题的解决，几何为工程师和发明家提供了描述和解决问题的
+                            数学语言。
+                        </p>
+                    </div>
+                    
+                    <div class="geometric-card rounded-none card-hover">
+                        <h3 class="font-display font-semibold text-xl mb-5 text-primary flex items-center border-b border-primary/10 pb-3">
+                            <div class="w-10 h-10 flex items-center justify-center border border-primary mr-3">
+                                <i class="fa fa-balance-scale text-primary"></i>
+                            </div>
+                            对法律与社会制度的影响
+                        </h3>
+                        <p class="text-secondary mb-4">
+                            欧式几何的公理化体系启发了现代法律和社会制度的构建，许多国家的法律体系
+                            借鉴了"公理-定理"的结构，从基本法律原则出发，通过逻辑推理形成完整的法律体系。
+                        </p>
+                        <p class="text-secondary">
+                            这种体系确保了法律的一致性和公正性，正如几何定理从公理推导而来，法律条文也
+                            应当从基本原则推导而来，确保整个体系的逻辑自洽。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 未来展望部分 -->
+    <section id="future" class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">未来展望</h2>
+                <p class="text-secondary text-lg">欧式几何思想在未来科技与社会发展中的潜力</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- 人工智能 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="w-14 h-14 flex items-center justify-center border border-primary mb-6">
+                        <i class="fa fa-brain text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-4">人工智能与机器学习</h3>
+                    <p class="text-secondary text-sm mb-5">
+                        几何深度学习将成为人工智能的重要分支，通过几何表示学习，
+                        提高机器对空间和形态的理解能力，推动计算机视觉和机器人技术的突破。
+                    </p>
+                    <div class="text-primary font-medium text-sm border-t border-primary/10 pt-3">
+                        关键应用：3D物体识别、自动驾驶、机器人导航
+                    </div>
+                </div>
+                
+                <!-- 虚拟现实 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="w-14 h-14 flex items-center justify-center border border-primary mb-6">
+                        <i class="fa fa-vr-cardboard text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-4">元宇宙与虚拟空间</h3>
+                    <p class="text-secondary text-sm mb-5">
+                        欧式几何将为元宇宙中的虚拟空间构建提供基础框架，结合非欧几何创建更丰富的
+                        沉浸式体验，实现虚拟与现实世界的无缝对接。
+                    </p>
+                    <div class="text-primary font-medium text-sm border-t border-primary/10 pt-3">
+                        关键应用：虚拟建筑、数字孪生、沉浸式社交
+                    </div>
+                </div>
+                
+                <!-- 空间探索 -->
+                <div class="geometric-card rounded-none card-hover">
+                    <div class="w-14 h-14 flex items-center justify-center border border-primary mb-6">
+                        <i class="fa fa-rocket text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-4">空间探索与星际旅行</h3>
+                    <p class="text-secondary text-sm mb-5">
+                        几何计算将在深空探测、星际导航和太空建筑中发挥关键作用，帮助人类实现
+                        更遥远的空间探索目标，建立月球和火星基地。
+                    </p>
+                    <div class="text-primary font-medium text-sm border-t border-primary/10 pt-3">
+                        关键应用：轨道计算、星际导航、太空站设计
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 max-w-4xl mx-auto geometric-card rounded-none">
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="md:w-1/2 border-r border-primary/10 pr-8 md:pr-8">
+                        <img src="https://picsum.photos/id/1071/600/400" alt="未来科技中的几何应用" class="w-full h-auto">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="font-display font-semibold text-xl mb-4 text-primary border-b border-primary/10 pb-3">几何思维的持久价值</h3>
+                        <p class="text-secondary mb-4">
+                            尽管科技在飞速发展，欧式几何所代表的公理化思维和逻辑推理能力仍然是
+                            人类解决复杂问题的重要工具。在数据爆炸的时代，几何提供了简化和理解复杂
+                            系统的框架。
+                        </p>
+                        <p class="text-secondary">
+                            未来的创新将继续建立在几何思维的基础上，从微观的纳米结构到宏观的宇宙探索，
+                            几何将继续帮助人类理解世界、创造未来。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 结论部分 -->
+    <section class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-6">总结</h2>
+                <div class="section-divider"></div>
+                <p class="text-secondary text-lg mt-10 leading-relaxed">
+                    欧式几何不仅是一门数学学科，更是一种思维方式和认知工具。从古希腊的《几何原本》到现代的
+                    人工智能，它的影响跨越时空，渗透到人类文明的各个方面。
+                </p>
+                <p class="text-secondary text-lg mt-6 leading-relaxed mb-10">
+                    在未来，随着科技的不断进步，欧式几何的基本思想将继续与新兴学科融合，
+                    为人类解决更复杂的问题提供思路和方法，推动社会不断向前发展。
+                </p>
+                <a href="#" class="inline-flex items-center px-8 py-3 bg-primary text-white hover:bg-primary/90 transition-colors border border-primary">
+                    <i class="fa fa-arrow-up mr-2"></i>
+                    返回顶部
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-12 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 flex items-center justify-center border-2 border-white">
+                            <i class="fa fa-cube text-white text-xl"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl">欧式几何的影响</span>
+                    </div>
+                    <p class="text-white/60 max-w-xs">
+                        探索欧式几何对人类社会各个领域发展的深远影响
+                    </p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-white/30 hover:border-white transition-colors">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-white/30 hover:border-white transition-colors">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-white/30 hover:border-white transition-colors">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-white/30 hover:border-white transition-colors">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 mt-10 pt-8 text-center text-white/60 text-sm">
+                <p>© 2023 欧式几何影响研究. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单（如果打开）
+                document.getElementById('mobileMenu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    return;
+                }
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-3', 'shadow-sm');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-3', 'shadow-sm');
+            }
+        });
+        
+        // 几何线条动画
+        window.addEventListener('load', function() {
+            // 英雄区域几何线条动画
+            const geometryCtx = document.getElementById('geometryCanvas').getContext('2d');
+            
+            // 设置canvas尺寸
+            function resizeCanvas() {
+                const container = geometryCtx.canvas.parentElement;
+                geometryCtx.canvas.width = container.clientWidth;
+                geometryCtx.canvas.height = container.clientHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // 几何线条类
+            class LineShape {
+                constructor() {
+                    this.x = Math.random() * geometryCtx.canvas.width;
+                    this.y = Math.random() * geometryCtx.canvas.height;
+                    this.size = Math.random() * 40 + 20;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.3;
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.01;
+                    this.type = Math.floor(Math.random() * 3); // 0: 三角形, 1: 矩形, 2: 圆形(用线条画)
+                    this.color = 'rgba(45, 55, 72, 0.6)';
+                    this.lineWidth = Math.random() * 1.5 + 0.5;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.rotation += this.rotationSpeed;
+                    
+                    // 边界检测
+                    const bounds = this.size / 2;
+                    if (this.x < -bounds) this.x = geometryCtx.canvas.width + bounds;
+                    if (this.x > geometryCtx.canvas.width + bounds) this.x = -bounds;
+                    if (this.y < -bounds) this.y = geometryCtx.canvas.height + bounds;
+                    if (this.y > geometryCtx.canvas.height + bounds) this.y = -bounds;
+                }
+                
+                draw() {
+                    geometryCtx.strokeStyle = this.color;
+                    geometryCtx.lineWidth = this.lineWidth;
+                    geometryCtx.beginPath();
+                    
+                    geometryCtx.save();
+                    geometryCtx.translate(this.x, this.y);
+                    geometryCtx.rotate(this.rotation);
+                    
+                    if (this.type === 0) { // 三角形
+                        geometryCtx.moveTo(0, -this.size/2);
+                        geometryCtx.lineTo(this.size/2, this.size/2);
+                        geometryCtx.lineTo(-this.size/2, this.size/2);
+                        geometryCtx.closePath();
+                    } else if (this.type === 1) { // 矩形
+                        geometryCtx.rect(-this.size/2, -this.size/2, this.size, this.size);
+                    } else { // 圆形(用线条画)
+                        geometryCtx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                    }
+                    
+                    geometryCtx.stroke();
+                    geometryCtx.restore();
+                }
+            }
+            
+            // 创建线条图形
+            const shapes = [];
+            for (let i = 0; i < 15; i++) {
+                shapes.push(new LineShape());
+            }
+            
+            // 连接线效果
+            function drawConnections() {
+                for (let i = 0; i < shapes.length; i++) {
+                    for (let j = i + 1; j < shapes.length; j++) {
+                        const dx = shapes[i].x - shapes[j].x;
+                        const dy = shapes[i].y - shapes[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            geometryCtx.strokeStyle = `rgba(45, 55, 72, ${0.3 - distance/300})`;
+                            geometryCtx.lineWidth = 0.5;
+                            geometryCtx.beginPath();
+                            geometryCtx.moveTo(shapes[i].x, shapes[i].y);
+                            geometryCtx.lineTo(shapes[j].x, shapes[j].y);
+                            geometryCtx.stroke();
+                        }
+                    }
+                }
+            }
+            
+            // 动画循环
+            function animate() {
+                geometryCtx.clearRect(0, 0, geometryCtx.canvas.width, geometryCtx.canvas.height);
+                
+                drawConnections();
+                
+                for (const shape of shapes) {
+                    shape.update();
+                    shape.draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            // 应用领域图表 - 线条风格
+            const appCtx = document.getElementById('applicationsChart').getContext('2d');
+            new Chart(appCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['建筑设计', '工程技术', '科学研究', '计算机图形', '艺术创作', '导航定位'],
+                    datasets: [{
+                        label: '应用频率指数',
+                        data: [85, 90, 75, 95, 65, 80],
+                        backgroundColor: 'transparent',
+                        borderColor: '#2d3748',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#2d3748',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(45, 55, 72, 0.1)',
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                color: '#4a5568'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#4a5568'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+        
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section > div > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+    
