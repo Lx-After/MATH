@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧式几何公理化方法对当代人类文明的多维影响</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a365d',
+                        secondary: '#4299e1',
+                        accent: '#ed8936',
+                        light: '#f7fafc',
+                        dark: '#2d3748',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+            }
+            .transition-navbar {
+                transition: background-color 0.3s, padding 0.3s, box-shadow 0.3s;
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-dark">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full z-50 transition-navbar py-4 bg-transparent">
+        <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <a href="#" class="text-white font-bold text-xl md:text-2xl text-shadow">欧式几何公理化</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#intro" class="text-white hover:text-accent transition-colors">引言</a>
+                <a href="#mathematics" class="text-white hover:text-accent transition-colors">数学领域</a>
+                <a href="#technology" class="text-white hover:text-accent transition-colors">科技领域</a>
+                <a href="#education" class="text-white hover:text-accent transition-colors">教育领域</a>
+                <a href="#culture" class="text-white hover:text-accent transition-colors">文化社会</a>
+                <a href="#summary" class="text-white hover:text-accent transition-colors">总结</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-white text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#intro" class="text-primary hover:text-accent transition-colors py-2">引言</a>
+                <a href="#mathematics" class="text-primary hover:text-accent transition-colors py-2">数学领域</a>
+                <a href="#technology" class="text-primary hover:text-accent transition-colors py-2">科技领域</a>
+                <a href="#education" class="text-primary hover:text-accent transition-colors py-2">教育领域</a>
+                <a href="#culture" class="text-primary hover:text-accent transition-colors py-2">文化社会</a>
+                <a href="#summary" class="text-primary hover:text-accent transition-colors py-2">总结</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 bg-[url('https://picsum.photos/id/180/1920/1080')] bg-cover bg-center"></div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+        
+        <!-- 几何装饰元素 -->
+        <div class="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-white/20 rounded-full animate-pulse"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-48 h-48 border-2 border-white/20 transform rotate-45 animate-pulse" style="animation-delay: 0.5s"></div>
+        <div class="absolute top-1/2 right-1/4 w-24 h-24 border-2 border-white/20 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+        
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight text-shadow-lg opacity-0 transform translate-y-8 transition-all duration-1000" id="hero-title">
+                欧式几何公理化方法对当代人类文明的多维影响
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 opacity-0 transform translate-y-8 transition-all duration-1000 delay-300" id="hero-subtitle">
+                并非历史遗产，而是支撑当代文明的"逻辑基石"，其影响渗透数学、科技、教育、文化等核心领域
+            </p>
+            <a href="#intro" class="inline-block bg-accent hover:bg-accent/90 text-white font-medium px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 transform translate-y-8 transition-all duration-1000 delay-500" id="hero-button">
+                探索详情 <i class="fa fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <i class="fa fa-angle-double-down text-3xl"></i>
+        </div>
+    </header>
+
+    <main>
+        <!-- 引言部分 -->
+        <section id="intro" class="py-20 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex items-center justify-center mb-12">
+                        <div class="w-16 h-1 bg-accent mr-4"></div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-primary">引言</h2>
+                        <div class="w-16 h-1 bg-accent ml-4"></div>
+                    </div>
+                    
+                    <div class="bg-light rounded-2xl shadow-md p-8 md:p-10 transform transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
+                        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                            欧式几何公理化方法作为人类理性思维的伟大成就，不仅塑造了数学的发展轨迹，更成为支撑当代文明的"逻辑基石"。从古希腊欧几里得的《几何原本》到现代科技的前沿领域，这种以公理为基础、通过严格推理构建知识体系的方法，已经超越了数学范畴，深刻影响着人类文明的多个维度。
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            本页面将系统阐述欧式几何公理化方法在数学、科技、教育以及文化与社会领域的广泛影响，揭示其作为一种理性范式如何塑造了当代人类的思维方式和知识结构。
+                        </p>
+                    </div>
+                    
+                    <!-- 影响领域概览图表 -->
+                    <div class="mt-16 bg-white rounded-xl shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-6 text-center">欧式几何公理化方法的多维影响领域</h3>
+                        <div class="h-80">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数学领域部分 -->
+        <section id="mathematics" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row items-start gap-12">
+                    <!-- 左侧边栏 -->
+                    <div class="md:w-1/4 sticky top-24">
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                    <i class="fa fa-calculator text-primary text-xl"></i>
+                                </div>
+                                <h2 class="text-2xl md:text-3xl font-bold text-primary">数学领域</h2>
+                            </div>
+                            <p class="text-gray-600 mb-6">
+                                现代数学分支的"公理化模板"，确保各分支的统一性与严谨性
+                            </p>
+                            <div class="space-y-4">
+                                <a href="#math-branches" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 现代数学分支的公理化构建
+                                </a>
+                                <a href="#geometry-evolution" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 几何概念的严谨化与延展
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧内容 -->
+                    <div class="md:w-3/4">
+                        <div class="bg-white rounded-xl shadow-md p-8 mb-10 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="math-branches" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                现代数学分支的公理化构建
+                            </h3>
+                            <p class="text-gray-700 mb-8 leading-relaxed">
+                                公理化方法是当代数学统一性与严谨性的核心保障，推动各分支从"经验总结"升华为"理论科学"。
+                            </p>
+                            
+                            <!-- 代数领域 -->
+                            <div class="mb-10">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                        <i class="fa fa-superscript text-primary"></i>
+                                    </div>
+                                    <h4 class="text-xl font-semibold text-primary">代数领域</h4>
+                                </div>
+                                <p class="text-gray-700 mb-4 pl-11 leading-relaxed">
+                                    群论以"封闭性、结合律、单位元、逆元"4条公理定义"群"，环论、域论均效仿欧式几何"原始概念→公理→定理"的框架，使抽象代数成为解决密码学、量子力学问题的工具。
+                                </p>
+                                <div class="bg-gray-50 rounded-lg p-5 pl-11 border-l-4 border-secondary">
+                                    <p class="text-gray-700 italic">
+                                        例如，量子群的定义即基于公理化，确保量子运算的一致性。
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- 拓扑学领域 -->
+                            <div class="mb-10">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                        <i class="fa fa-cubes text-primary"></i>
+                                    </div>
+                                    <h4 class="text-xl font-semibold text-primary">拓扑学领域</h4>
+                                </div>
+                                <p class="text-gray-700 mb-4 pl-11 leading-relaxed">
+                                    通过"开集公理"（如"空集与全集是开集""开集并集是开集"）定义"拓扑空间"，统一研究几何图形的"连续变换"，为计算机图形学、相对论时空建模提供基础。
+                                </p>
+                            </div>
+                            
+                            <!-- 概率论领域 -->
+                            <div>
+                                <div class="flex items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                        <i class="fa fa-percent text-primary"></i>
+                                    </div>
+                                    <h4 class="text-xl font-semibold text-primary">概率论领域</h4>
+                                </div>
+                                <p class="text-gray-700 mb-4 pl-11 leading-relaxed">
+                                    柯尔莫哥洛夫1933年以"测度论"为基础，建立5条公理（如"概率非负""全集概率为1"），使概率论从"统计经验"变为严谨数学分支，支撑机器学习（如贝叶斯网络）、金融风险评估的逻辑严谨性。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-md p-8 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="geometry-evolution" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                几何概念的严谨化与延展
+                            </h3>
+                            
+                            <div class="mb-10">
+                                <h4 class="text-xl font-semibold text-primary mb-4">当代几何概念的公理化演进</h4>
+                                <p class="text-gray-700 mb-6 leading-relaxed">
+                                    当代几何概念的定义均以公理化"相容性"为准则：如棱柱定义从1829年"两底面平行全等、侧面为平行四边形"（欧氏原始定义），演进为1916年"基于棱柱面的定义"（棱柱面+两平行平面），消除反例漏洞（Stone & Millis，1916）；
+                                </p>
+                                <p class="text-gray-700 mb-6 leading-relaxed">
+                                    旋转体（圆柱、圆锥）定义从"矩形/直角三角形旋转"（动态直观），过渡到"基于圆柱面/圆锥面的公理化定义"（沈中宇，2023），确保广义旋转体（如斜圆柱、椭圆圆锥）的逻辑自洽。
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold text-primary mb-4">几何与其他分支的融合</h4>
+                                <p class="text-gray-700 mb-6 leading-relaxed">
+                                    公理化方法推动几何与其他分支融合：汪晓勤（2024）从《几何原本》卷I.38（等底等高三角形面积相等）推导正弦定理，从卷I.20（两边之和大于第三边）推导余弦定理，揭示几何与三角学的内在关联，为高中三角教学提供"形数结合"的严谨路径。
+                                </p>
+                                
+                                <!-- 几何与三角学关联图示 -->
+                                <div class="bg-gray-50 rounded-lg p-6 mt-8">
+                                    <h5 class="text-lg font-medium text-primary mb-4 text-center">几何与三角学的内在关联</h5>
+                                    <div class="h-64 md:h-80">
+                                        <canvas id="geometryTrigChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 科技领域部分 -->
+        <section id="technology" class="py-20 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row-reverse items-start gap-12">
+                    <!-- 右侧边栏 -->
+                    <div class="md:w-1/4 sticky top-24">
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                    <i class="fa fa-microchip text-primary text-xl"></i>
+                                </div>
+                                <h2 class="text-2xl md:text-3xl font-bold text-primary">科技领域</h2>
+                            </div>
+                            <p class="text-gray-600 mb-6">
+                                现代技术的"逻辑支撑引擎"，为技术提供确定性保障
+                            </p>
+                            <div class="space-y-4">
+                                <a href="#construction" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 建筑与工程
+                                </a>
+                                <a href="#physics" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 物理学与宇宙探索
+                                </a>
+                                <a href="#ai-cs" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 人工智能与计算机科学
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 左侧内容 -->
+                    <div class="md:w-3/4">
+                        <div class="bg-gray-50 rounded-xl shadow-md p-8 mb-10 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="construction" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                建筑与工程：结构安全与美学的统一
+                            </h3>
+                            
+                            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                                <div>
+                                    <h4 class="text-xl font-semibold text-primary mb-4">历史应用</h4>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        20世纪初美国几何教科书已将公理化推导的几何原理应用于建筑设计：如哥特拱、四心拱的尺寸计算（汪晓勤，2016），已知等边拱跨度AB=4a，通过欧式几何"全等三角形""圆的半径性质"推导拱高CI，确保建筑结构（如英国林肯大教堂）既满足力学稳定性（抵抗外力形变），又符合对称美学（圆、三角形的和谐比例）。
+                                    </p>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md h-64 md:h-auto">
+                                    <img src="https://picsum.photos/id/1076/800/600" alt="哥特式建筑展示几何美学与结构稳定性" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold text-primary mb-4">现代建筑</h4>
+                                <p class="text-gray-700 mb-6 leading-relaxed">
+                                    高层建筑"框架结构"依赖"三角形稳定性"（欧式几何公理），桥梁设计（如斜拉桥）通过"相似三角形"计算钢索拉力，计算机辅助设计（CAD）的3D建模核心是"欧式几何坐标变换"（平移、旋转、缩放），确保虚拟模型与实体结构的一致性。
+                                </p>
+                                
+                                <!-- 建筑中几何应用卡片 -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                                    <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                            <i class="fa fa-building text-primary text-xl"></i>
+                                        </div>
+                                        <h5 class="font-semibold text-primary mb-2">高层建筑</h5>
+                                        <p class="text-gray-600 text-sm">基于三角形稳定性公理的框架结构设计</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                            <i class="fa fa-road text-primary text-xl"></i>
+                                        </div>
+                                        <h5 class="font-semibold text-primary mb-2">桥梁设计</h5>
+                                        <p class="text-gray-600 text-sm">通过相似三角形计算斜拉桥钢索拉力</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                            <i class="fa fa-cad text-primary text-xl"></i>
+                                        </div>
+                                        <h5 class="font-semibold text-primary mb-2">CAD建模</h5>
+                                        <p class="text-gray-600 text-sm">基于欧式几何坐标变换的3D建模技术</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-xl shadow-md p-8 mb-10 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="physics" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                物理学与宇宙探索：理论严谨性的基石
+                            </h3>
+                            
+                            <div class="mb-10">
+                                <h4 class="text-xl font-semibold text-primary mb-4">广义相对论</h4>
+                                <p class="text-gray-700 leading-relaxed">
+                                    爱因斯坦以黎曼几何（非欧几何延伸）为数学基础，其"弯曲时空"模型的严谨性依赖公理化——黎曼几何通过修改欧式"平行公设"，建立"曲率"公理化体系，成功解释水星近日点进动、引力透镜等现象，成为当代宇宙学（如黑洞研究）的核心工具。
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold text-primary mb-4">量子物理</h4>
+                                <p class="text-gray-700 leading-relaxed">
+                                    量子力学的"希尔伯特空间"理论以公理化定义"量子态""可观测量"，确保量子计算（如肖尔算法）、量子通信（量子不可克隆定理）的逻辑自洽，避免技术应用中的漏洞。
+                                </p>
+                                
+                                <div class="mt-8 rounded-lg overflow-hidden shadow-md">
+                                    <img src="https://picsum.photos/id/125/1200/400" alt="黑洞模拟图展示广义相对论应用" class="w-full h-64 object-cover">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-xl shadow-md p-8 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="ai-cs" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                人工智能与计算机科学：推理可靠性的保障
+                            </h3>
+                            
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="text-xl font-semibold text-primary mb-4">程序验证</h4>
+                                    <p class="text-gray-700 leading-relaxed mb-6">
+                                        基于"Hoare逻辑"（公理化格式：前置条件→程序语句→后置条件）证明程序正确性，如银行转账程序需通过公理化验证"转账前后资金总量守恒"，防止系统漏洞。
+                                    </p>
+                                    
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <h5 class="font-medium text-primary mb-2">Hoare逻辑示例</h5>
+                                        <p class="text-gray-600 text-sm"><span class="font-mono bg-gray-100 px-1"> {x ≥ 5} y := x + 3 {y ≥ 8} </span></p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-xl font-semibold text-primary mb-4">机器学习</h4>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        贝叶斯网络以概率论公理为基础，确保AI推理的一致性；大语言模型（如GPT）的逻辑模块隐含欧式几何"从前提推结论"的思维，例如通过公理化的"因果关系"减少"逻辑谬误"（如矛盾回答）。
+                                    </p>
+                                    
+                                    <div class="mt-6">
+                                        <img src="https://picsum.photos/id/160/600/300" alt="AI逻辑推理示意图" class="w-full h-40 object-cover rounded-lg shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教育领域部分 -->
+        <section id="education" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row items-start gap-12">
+                    <!-- 左侧边栏 -->
+                    <div class="md:w-1/4 sticky top-24">
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                    <i class="fa fa-graduation-cap text-primary text-xl"></i>
+                                </div>
+                                <h2 class="text-2xl md:text-3xl font-bold text-primary">教育领域</h2>
+                            </div>
+                            <p class="text-gray-600 mb-6">
+                                核心素养与理性思维的"培养载体"，塑造师生的理性认知
+                            </p>
+                            <div class="space-y-4">
+                                <a href="#curriculum" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 课程体系
+                                </a>
+                                <a href="#teacher-dev" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 教师发展
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧内容 -->
+                    <div class="md:w-3/4">
+                        <div class="bg-white rounded-xl shadow-md p-8 mb-10 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="curriculum" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                课程体系：公理化逻辑贯穿教材设计
+                            </h3>
+                            
+                            <div class="mb-10">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                        <i class="fa fa-book text-primary"></i>
+                                    </div>
+                                    <h4 class="text-xl font-semibold text-primary">初中几何</h4>
+                                </div>
+                                <p class="text-gray-700 mb-6 pl-11 leading-relaxed">
+                                    从"两点确定一条直线""平行公理"出发，推导三角形（全等、相似）、四边形（平行四边形、矩形）性质，学生通过"证明圆的切线""构造全等三角形"，掌握"定义→公理→定理"的演绎逻辑，培养"质疑—论证—反驳"的理性习惯。
+                                </p>
+                                
+                                <!-- 初中几何证明示例 -->
+                                <div class="bg-gray-50 rounded-lg p-6 pl-11 border-l-4 border-secondary">
+                                    <h5 class="font-medium text-primary mb-3">几何证明示例：三角形全等判定</h5>
+                                    <p class="text-gray-700 mb-2">已知：在△ABC和△DEF中，AB=DE，BC=EF，AC=DF</p>
+                                    <p class="text-gray-700 mb-2">求证：△ABC≌△DEF</p>
+                                    <p class="text-gray-700 text-sm mt-3">证明过程基于"边边边(SSS)"公理，通过公理化推理得出结论</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                        <i class="fa fa-book text-primary"></i>
+                                    </div>
+                                    <h4 class="text-xl font-semibold text-primary">高中数学</h4>
+                                </div>
+                                <p class="text-gray-700 mb-6 pl-11 leading-relaxed">
+                                    立体几何通过"公理4（平行传递性）"构建空间关系，解析几何将"欧式几何图形"转化为"代数方程"，本质是"公理化体系的跨维度融合"；同时，中算与欧式几何结合（如"勾股容方"问题），通过"定义内接正方形→基于勾股定理公理→推导边长公式"，实现文化传承与理性培养的统一（李一冉，2025）。
+                                </p>
+                                
+                                <!-- 教育阶段逻辑培养图表 -->
+                                <div class="mt-8">
+                                    <h5 class="text-lg font-medium text-primary mb-4 text-center">不同教育阶段的公理化思维培养</h5>
+                                    <div class="h-64">
+                                        <canvas id="educationChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-md p-8 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="teacher-dev" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                教师发展：数学观的"理性重塑"
+                            </h3>
+                            
+                            <p class="text-gray-700 mb-8 leading-relaxed">
+                                孙丹丹（2024）对3位教师的案例研究显示，学习欧式几何公理化史后，教师发生三方面转变：
+                            </p>
+                            
+                            <!-- 教师转变卡片 -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="bg-gray-50 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                        <i class="fa fa-wrench text-primary text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-primary mb-3">弱化"工具主义观"</h4>
+                                    <p class="text-gray-600 text-sm">
+                                        不再将数学视为"机械套公式"，而是认识到数学是"公理化演绎的体系"（如函数定义的演进需符合公理一致性）
+                                    </p>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                        <i class="fa fa-cubes text-primary text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-primary mb-3">强化"柏拉图主义观"</h4>
+                                    <p class="text-gray-600 text-sm">
+                                        理解数学知识的内在统一性（如欧式几何与三角学的关联），避免知识碎片化
+                                    </p>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                                        <i class="fa fa-lightbulb-o text-primary text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-primary mb-3">增强"问题解决观"</h4>
+                                    <p class="text-gray-600 text-sm">
+                                        通过非欧几何的诞生，认识到数学是"动态发展的公理化体系"，引导学生勇于质疑（如"平行公设是否可证"），培养创新思维
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-primary/5 rounded-lg p-6 border border-primary/10">
+                                <h4 class="text-lg font-semibold text-primary mb-3">教师理性认知提升路径</h4>
+                                <div class="relative">
+                                    <!-- 时间线 -->
+                                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:translate-x-px"></div>
+                                    
+                                    <!-- 时间点1 -->
+                                    <div class="relative z-10 mb-8 md:mb-16">
+                                        <div class="flex flex-col md:flex-row items-start">
+                                            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-4 md:mt-0">
+                                                <h5 class="font-medium text-primary">学习公理化历史</h5>
+                                                <p class="text-gray-600 text-sm mt-1">了解欧式几何公理体系的形成过程与历史背景</p>
+                                            </div>
+                                            <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                                <div class="w-4 h-4 rounded-full bg-primary"></div>
+                                            </div>
+                                            <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 时间点2 -->
+                                    <div class="relative z-10 mb-8 md:mb-16">
+                                        <div class="flex flex-col md:flex-row items-start">
+                                            <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                                            <div class="md:w-12 flex justify-center order-1">
+                                                <div class="w-4 h-4 rounded-full bg-primary"></div>
+                                            </div>
+                                            <div class="md:w-1/2 md:pl-12 order-2 mt-4 md:mt-0">
+                                                <h5 class="font-medium text-primary">理解公理体系本质</h5>
+                                                <p class="text-gray-600 text-sm mt-1">掌握"原始概念→公理→定理"的演绎逻辑结构</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 时间点3 -->
+                                    <div class="relative z-10">
+                                        <div class="flex flex-col md:flex-row items-start">
+                                            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-4 md:mt-0">
+                                                <h5 class="font-medium text-primary">重构数学教学观</h5>
+                                                <p class="text-gray-600 text-sm mt-1">将公理化思维融入教学，培养学生的逻辑推理能力</p>
+                                            </div>
+                                            <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                                <div class="w-4 h-4 rounded-full bg-primary"></div>
+                                            </div>
+                                            <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文化与社会领域部分 -->
+        <section id="culture" class="py-20 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row-reverse items-start gap-12">
+                    <!-- 右侧边栏 -->
+                    <div class="md:w-1/4 sticky top-24">
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                    <i class="fa fa-globe text-primary text-xl"></i>
+                                </div>
+                                <h2 class="text-2xl md:text-3xl font-bold text-primary">文化与社会领域</h2>
+                            </div>
+                            <p class="text-gray-600 mb-6">
+                                理性精神与跨文明交流的"纽带"，推动社会认知科学化
+                            </p>
+                            <div class="space-y-4">
+                                <a href="#rationality" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 理性精神的普及
+                                </a>
+                                <a href="#cultural-fusion" class="block text-secondary hover:text-accent transition-colors flex items-center">
+                                    <i class="fa fa-angle-right mr-2"></i> 跨文明数学文化的融合
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 左侧内容 -->
+                    <div class="md:w-3/4">
+                        <div class="bg-gray-50 rounded-xl shadow-md p-8 mb-10 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="rationality" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                理性精神的普及：抵御伪科学与模糊思维
+                            </h3>
+                            
+                            <div class="mb-10">
+                                <p class="text-gray-700 mb-6 leading-relaxed">
+                                    公理化的"逻辑闭环"要求（前提→推导→结论）成为公众辨别信息真伪的工具，例如在气候变化争议中，通过"公理（如'碳排放与温度正相关'）→演绎（模型预测）→验证（冰川融化数据）"的链条，驳斥"气候变暖伪科学"；
+                                </p>
+                                
+                                <div class="rounded-lg overflow-hidden shadow-md mb-6">
+                                    <img src="https://picsum.photos/id/110/1200/400" alt="科学推理过程示意图" class="w-full h-56 object-cover">
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-5 shadow-sm">
+                                    <h4 class="text-lg font-semibold text-primary mb-3">公理化逻辑在科学论证中的应用</h4>
+                                    <ol class="list-decimal list-inside text-gray-700 space-y-2 pl-4">
+                                        <li><span class="font-medium">确立公理前提</span>：基于观察和实验的基本事实</li>
+                                        <li><span class="font-medium">逻辑演绎推导</span>：从公理出发进行严格推理</li>
+                                        <li><span class="font-medium">结论验证</span>：通过实践检验推导结论</li>
+                                        <li><span class="font-medium">体系完善</span>：根据验证结果修正或扩展公理体系</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold text-primary mb-4">法律与政策制定</h4>
+                                <p class="text-gray-700 leading-relaxed">
+                                    法律条文的"法条→判例"逻辑、政策的"目标→措施→效果"推导，均隐含公理化思想，确保社会治理的公平与可预期性。
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                    <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                                        <div class="flex items-center mb-3">
+                                            <i class="fa fa-gavel text-primary mr-3"></i>
+                                            <h5 class="font-semibold text-primary">法律体系中的公理化思维</h5>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">
+                                            以宪法为"公理基础"，法律条文为"定理"，判例为"推论"，形成逻辑自洽的法律体系，确保司法公正。
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                                        <div class="flex items-center mb-3">
+                                            <i class="fa fa-balance-scale text-primary mr-3"></i>
+                                            <h5 class="font-semibold text-primary">政策制定的公理化逻辑</h5>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">
+                                            以社会目标为"公理"，政策措施为"推导步骤"，预期效果为"结论"，形成可验证的政策体系，提高治理效能。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-xl shadow-md p-8 transform transition-all duration-300 hover:shadow-lg">
+                            <h3 id="cultural-fusion" class="text-2xl font-bold text-primary mb-6 pb-2 border-b border-gray-200">
+                                跨文明数学文化的融合
+                            </h3>
+                            
+                            <p class="text-gray-700 mb-8 leading-relaxed">
+                                中算（如《九章算术》"勾股容方"）与欧式几何公理化的结合，成为当代数学教育的特色路径：例如通过刘徽"割补法"（中算）与欧式"相似三角形定理"（公理化）双重证明"勾股容方"公式，既展现中国传统智慧，又强化逻辑严谨性，培养学生的文化自信与理性思维（李一冉，2025）；
+                            </p>
+                            
+                            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                                <div class="bg-white rounded-lg p-6 shadow-sm">
+                                    <h4 class="text-xl font-semibold text-primary mb-4">《几何原本》的全球影响</h4>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        《几何原本》作为"人类理性典籍"，被翻译成100多种语言，与《九章算术》共同构成中西方数学文化的核心，推动跨文明在"科学真理"层面的共识（如国际数学教育大会将公理化方法作为跨文化教学案例）。
+                                    </p>
+                                </div>
+                                
+                                <div class="rounded-lg overflow-hidden shadow-md h-64 md:h-auto">
+                                    <img src="https://picsum.photos/id/24/800/600" alt="不同文明的数学典籍展示" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            
+                            <!-- 中西方数学融合表格 -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th class="py-3 px-4 text-left">数学问题</th>
+                                            <th class="py-3 px-4 text-left">中国传统方法</th>
+                                            <th class="py-3 px-4 text-left">欧式几何方法</th>
+                                            <th class="py-3 px-4 text-left">融合价值</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="py-3 px-4 font-medium">勾股定理</td>
+                                            <td class="py-3 px-4">弦图割补（赵爽）</td>
+                                            <td class="py-3 px-4">公理化演绎证明</td>
+                                            <td class="py-3 px-4">形数结合，直观与严谨统一</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-medium">勾股容方</td>
+                                            <td class="py-3 px-4">出入相补原理（刘徽）</td>
+                                            <td class="py-3 px-4">相似三角形比例</td>
+                                            <td class="py-3 px-4">文化传承与逻辑思维结合</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-medium">圆周率计算</td>
+                                            <td class="py-3 px-4">割圆术（刘徽）</td>
+                                            <td class="py-3 px-4">极限理论公理化</td>
+                                            <td class="py-3 px-4">算法思想与严格证明互补</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结部分 -->
+        <section id="summary" class="py-20 bg-primary text-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-4xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">当代价值总结</h2>
+                    <div class="w-20 h-1 bg-accent mx-auto"></div>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-xl text-white/90 leading-relaxed mb-10 text-center">
+                        欧式几何公理化方法对当代文明的核心贡献，在于其提供了"追求严谨、逻辑、确定性"的理性范式：
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fa fa-calculator text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-center">在数学中</h3>
+                            <p class="text-white/80 text-center">
+                                它是各分支统一的"理论模板"，确保知识的一致性与可扩展性
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fa fa-microchip text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-center">在科技中</h3>
+                            <p class="text-white/80 text-center">
+                                它是技术可靠性的"逻辑保障"，支撑从建筑到AI的创新应用
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fa fa-graduation-cap text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-center">在教育中</h3>
+                            <p class="text-white/80 text-center">
+                                它是核心素养的"培养载体"，塑造师生的理性思维与创新意识
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fa fa-globe text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-center">在文化中</h3>
+                            <p class="text-white/80 text-center">
+                                它是跨文明交流的"理性纽带"，推动社会认知的科学化与共识化
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10">
+                        <p class="text-xl text-white/90 leading-relaxed text-center">
+                            这种范式不仅未因非欧几何、现代数学的发展而过时，反而在当代复杂问题（如量子计算、AI伦理）的解决中，展现出更强的适应性与指导价值，成为人类文明持续进步的"理性基因"。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">欧式几何公理化方法的多维影响</h3>
+                    <p class="text-gray-400">探索理性思维对人类文明的深远影响</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#intro" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-arrow-up"></i> 回到顶部
+                    </a>
+                    <a href="#mathematics" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-calculator"></i> 数学领域
+                    </a>
+                    <a href="#technology" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-microchip"></i> 科技领域
+                    </a>
+                    <a href="#education" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-graduation-cap"></i> 教育领域
+                    </a>
+                    <a href="#culture" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-globe"></i> 文化社会
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>© 2023 欧式几何公理化方法研究 | 探索理性思维的力量</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-primary', 'py-2', 'shadow-md');
+                navbar.classList.remove('bg-transparent', 'py-4');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-4');
+                navbar.classList.remove('bg-primary', 'py-2', 'shadow-md');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+            } else {
+                menuToggle.innerHTML = '<i class="fa fa-times"></i>';
+            }
+        });
+        
+        // 英雄区域动画
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('hero-title').classList.remove('opacity-0', 'translate-y-8');
+            }, 300);
+            
+            setTimeout(() => {
+                document.getElementById('hero-subtitle').classList.remove('opacity-0', 'translate-y-8');
+            }, 600);
+            
+            setTimeout(() => {
+                document.getElementById('hero-button').classList.remove('opacity-0', 'translate-y-8');
+            }, 900);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 影响领域概览图表
+        const impactCtx = document.getElementById('impactChart').getContext('2d');
+        new Chart(impactCtx, {
+            type: 'radar',
+            data: {
+                labels: ['数学理论', '建筑工程', '物理研究', '计算机科学', '教育培养', '文化交流', '社会治理'],
+                datasets: [{
+                    label: '公理化方法影响程度',
+                    data: [95, 85, 90, 88, 92, 75, 80],
+                    backgroundColor: 'rgba(66, 153, 225, 0.2)',
+                    borderColor: 'rgba(66, 153, 225, 1)',
+                    pointBackgroundColor: 'rgba(66, 153, 225, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(66, 153, 225, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 几何与三角学关联图表
+        const geometryTrigCtx = document.getElementById('geometryTrigChart').getContext('2d');
+        new Chart(geometryTrigCtx, {
+            type: 'bar',
+            data: {
+                labels: ['三角形面积', '勾股定理', '正弦定理', '余弦定理', '相似三角形'],
+                datasets: [{
+                    label: '几何公理化基础',
+                    data: [90, 95, 85, 80, 92],
+                    backgroundColor: 'rgba(26, 54, 93, 0.7)',
+                }, {
+                    label: '三角学应用',
+                    data: [75, 85, 95, 90, 70],
+                    backgroundColor: 'rgba(237, 137, 54, 0.7)',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '关联强度'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 教育阶段公理化思维培养图表
+        const educationCtx = document.getElementById('educationChart').getContext('2d');
+        new Chart(educationCtx, {
+            type: 'line',
+            data: {
+                labels: ['小学', '初中', '高中', '大学'],
+                datasets: [{
+                    label: '公理化思维培养',
+                    data: [20, 60, 85, 95],
+                    fill: true,
+                    backgroundColor: 'rgba(66, 153, 225, 0.2)',
+                    borderColor: 'rgba(26, 54, 93, 1)',
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(26, 54, 93, 1)'
+                }, {
+                    label: '逻辑推理能力',
+                    data: [30, 70, 80, 90],
+                    fill: true,
+                    backgroundColor: 'rgba(237, 137, 54, 0.2)',
+                    borderColor: 'rgba(237, 137, 54, 1)',
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(237, 137, 54, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '能力水平'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 滚动动画
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.bg-white.rounded-xl.shadow-md, .bg-gray-50.rounded-xl.shadow-md');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('opacity-100');
+                    element.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        };
+        
+        // 初始设置
+        document.querySelectorAll('.bg-white.rounded-xl.shadow-md, .bg-gray-50.rounded-xl.shadow-md').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700');
+        });
+        
+        // 监听滚动事件
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
