@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧几里得几何的三大贡献</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a365d',
+                        secondary: '#2c5282',
+                        accent: '#4299e1',
+                        light: '#ebf8ff',
+                        dark: '#2d3748'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .section-fade {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+            .section-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .nav-active {
+                @apply border-l-4 border-accent pl-2 -ml-3;
+            }
+            .dimension-card {
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+            }
+            .dimension-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -33px;
+                top: 5px;
+                height: 15px;
+                width: 15px;
+                border-radius: 50%;
+                background: #4299e1;
+                border: 3px solid #ebf8ff;
+            }
+            .timeline-item::after {
+                content: '';
+                position: absolute;
+                left: -26px;
+                top: 20px;
+                bottom: -20px;
+                width: 2px;
+                background: #ebf8ff;
+            }
+            .timeline-item:last-child::after {
+                display: none;
+            }
+            .section-divider {
+                height: 80px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,128L48,144C96,160,192,192,288,197.3C384,203,480,181,576,181.3C672,181,768,203,864,197.3C960,192,1056,160,1152,138.7C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                margin: -1px 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-primary font-bold text-xl flex items-center">
+                <i class="fa fa-cube mr-2"></i>
+                <span>欧几里得几何</span>
+            </a>
+            <button id="menu-toggle" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#intro" class="text-gray-600 hover:text-accent transition-colors">概述</a></li>
+                    <li><a href="#geometry" class="text-gray-600 hover:text-accent transition-colors">几何学贡献</a></li>
+                    <li><a href="#mathematics" class="text-gray-600 hover:text-accent transition-colors">数学影响</a></li>
+                    <li><a href="#civilization" class="text-gray-600 hover:text-accent transition-colors">文明意义</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2">
+                <ul class="space-y-3 py-3">
+                    <li><a href="#intro" class="block text-gray-600 hover:text-accent transition-colors">概述：欧几里得的三大贡献</a></li>
+                    <li><a href="#geometry" class="block text-gray-600 hover:text-accent transition-colors">对几何学的贡献</a></li>
+                    <li><a href="#mathematics" class="block text-gray-600 hover:text-accent transition-colors">对数学其他领域的影响</a></li>
+                    <li><a href="#civilization" class="block text-gray-600 hover:text-accent transition-colors">对人类文明的深远意义</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主视觉区域 -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary to-secondary text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-6 leading-tight text-shadow">欧几里得几何的三大贡献</h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-10">几何学、数学与人类文明的革命性变革</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <i class="fa fa-cube text-3xl mb-3"></i>
+                        <h3 class="font-semibold text-lg">几何学贡献</h3>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <i class="fa fa-calculator text-3xl mb-3"></i>
+                        <h3 class="font-semibold text-lg">数学影响</h3>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <i class="fa fa-globe text-3xl mb-3"></i>
+                        <h3 class="font-semibold text-lg">文明意义</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 装饰性几何图形 -->
+        <div class="absolute top-1/4 left-10 w-20 h-20 border border-white/20 rounded-full"></div>
+        <div class="absolute bottom-1/3 right-16 w-32 h-32 border border-white/20 transform rotate-45"></div>
+        <div class="absolute top-2/3 left-1/4 w-16 h-16 border-t-2 border-l-2 border-white/30"></div>
+    </section>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- 侧边导航（桌面端） -->
+            <aside class="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
+                <nav class="bg-white rounded-lg shadow p-4">
+                    <h3 class="text-lg font-semibold text-primary mb-4 pb-2 border-b border-gray-200">目录</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#intro" class="text-gray-600 hover:text-accent transition-colors nav-link">概述：三大贡献简介</a></li>
+                        <li><a href="#geometry" class="text-gray-600 hover:text-accent transition-colors nav-link">对几何学的贡献</a></li>
+                        <li class="pl-4">
+                            <a href="#axiomatic" class="text-gray-600 hover:text-accent transition-colors nav-link">公理化体系的创立</a>
+                        </li>
+                        <li class="pl-4">
+                            <a href="#geometric-theories" class="text-gray-600 hover:text-accent transition-colors nav-link">几何理论的系统化</a>
+                        </li>
+                        <li class="pl-4">
+                            <a href="#non-euclidean" class="text-gray-600 hover:text-accent transition-colors nav-link">对非欧几何的启发</a>
+                        </li>
+                        <li><a href="#mathematics" class="text-gray-600 hover:text-accent transition-colors nav-link">对数学其他领域的影响</a></li>
+                        <li class="pl-4">
+                            <a href="#methodology" class="text-gray-600 hover:text-accent transition-colors nav-link">数学方法论的革新</a>
+                        </li>
+                        <li class="pl-4">
+                            <a href="#interdisciplinary" class="text-gray-600 hover:text-accent transition-colors nav-link">跨领域数学发展</a>
+                        </li>
+                        <li><a href="#civilization" class="text-gray-600 hover:text-accent transition-colors nav-link">对人类文明的深远意义</a></li>
+                        <li class="pl-4">
+                            <a href="#scientific" class="text-gray-600 hover:text-accent transition-colors nav-link">科学方法的奠基</a>
+                        </li>
+                        <li class="pl-4">
+                            <a href="#cultural" class="text-gray-600 hover:text-accent transition-colors nav-link">文化与教育的变革</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- 内容区域 -->
+            <div class="flex-1 max-w-3xl mx-auto">
+                <!-- 概述部分 -->
+                <section id="intro" class="mb-16 section-fade">
+                    <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-6 pb-2 border-b border-gray-100">
+                            <i class="fa fa-compass text-accent mr-3"></i>概述：欧几里得几何的三大贡献维度
+                        </h2>
+                        
+                        <p class="mb-6 leading-relaxed">
+                            欧几里得及其著作《几何原本》不仅是几何学发展的里程碑，更是人类理性思维史上的重要转折点。其影响跨越了数学领域，深刻塑造了科学方法、教育体系和人类对世界的认知方式。欧几里得几何的贡献主要体现在三个维度：
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="dimension-card bg-light rounded-xl p-6 border border-blue-100">
+                                <div class="text-accent text-center mb-4">
+                                    <i class="fa fa-cube fa-3x"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-center text-secondary mb-3">几何学贡献</h3>
+                                <p class="text-sm text-gray-600">
+                                    创立公理化体系，系统化几何知识，为后世几何学发展奠定基础，并启发了非欧几何的诞生。
+                                </p>
+                            </div>
+                            
+                            <div class="dimension-card bg-light rounded-xl p-6 border border-blue-100">
+                                <div class="text-accent text-center mb-4">
+                                    <i class="fa fa-calculator fa-3x"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-center text-secondary mb-3">数学影响</h3>
+                                <p class="text-sm text-gray-600">
+                                    建立演绎推理范式，推动数学各分支发展，影响了代数、分析、拓扑等多个数学领域。
+                                </p>
+                            </div>
+                            
+                            <div class="dimension-card bg-light rounded-xl p-6 border border-blue-100">
+                                <div class="text-accent text-center mb-4">
+                                    <i class="fa fa-globe fa-3x"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-center text-secondary mb-3">文明意义</h3>
+                                <p class="text-sm text-gray-600">
+                                    塑造科学方法论，影响教育体系，推动理性精神的传播，成为人类文明发展的重要思想基石。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-accent">
+                            <p class="italic text-gray-700">
+                                "《几何原本》的影响超出了数学领域，它是人类理性思维的第一个伟大成就，为科学革命奠定了方法论基础，其公理化思想塑造了西方文明的理性精神。"
+                            </p>
+                            <p class="text-right text-sm text-gray-500 mt-2">— 科学史学者</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第一部分：对几何学的贡献 -->
+                <section id="geometry" class="mb-16 section-fade">
+                    <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-6 pb-2 border-b border-gray-100">
+                            <i class="fa fa-cube text-accent mr-3"></i>对几何学的贡献
+                        </h2>
+                        
+                        <div class="relative rounded-lg overflow-hidden mb-8">
+                            <img src="https://picsum.photos/800/400?random=1" alt="欧几里得几何对几何学发展的贡献" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                                <p class="text-white p-4 text-sm">欧几里得几何建立了第一个完整的几何理论体系，影响至今</p>
+                            </div>
+                        </div>
+                        
+                        <div id="axiomatic" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">1.1 公理化体系的创立</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何最显著的贡献在于其公理化方法的创立。在《几何原本》中，欧几里得首先给出了23个定义、5条公设和5条公理，然后从这些基本假设出发，通过严格的逻辑推理推导出了460多个命题，构建了完整的几何理论体系。
+                            </p>
+                            
+                            <div class="bg-gray-50 rounded-lg p-5 my-5 border border-gray-200">
+                                <h4 class="font-medium text-primary mb-3">欧几里得的五条公设：</h4>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>从一点向另一点可以引一条直线</li>
+                                    <li>任意线段能无限延伸成一条直线</li>
+                                    <li>给定任意线段，可以以其一个端点作为圆心，该线段作为半径作一个圆</li>
+                                    <li>所有直角都相等</li>
+                                    <li>若两条直线都与第三条直线相交，并且在同一边的内角之和小于两个直角，则这两条直线在这一边必定相交（平行公设）</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div id="geometric-theories" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">1.2 几何理论的系统化</h3>
+                            <p class="mb-4 leading-relaxed">
+                                在欧几里得之前，希腊人已经积累了大量的几何知识，但这些知识大多是零散的、缺乏系统性的。欧几里得的贡献在于将这些零散的知识进行了系统整理和结构化，形成了一个从简单到复杂、从基础到高级的知识体系。
+                            </p>
+                            
+                            <div class="overflow-x-auto my-5">
+                                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="py-3 px-4 border-b text-left">《几何原本》卷数</th>
+                                            <th class="py-3 px-4 border-b text-left">主要内容</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-4 border-b">第1-4卷</td>
+                                            <td class="py-2 px-4 border-b">平面几何基础，包括直线、三角形、四边形、圆等基本图形的性质</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="py-2 px-4 border-b">第5-6卷</td>
+                                            <td class="py-2 px-4 border-b">比例理论及其在几何中的应用</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-4 border-b">第7-9卷</td>
+                                            <td class="py-2 px-4 border-b">数论基础，讨论整数的性质和关系</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="py-2 px-4 border-b">第10卷</td>
+                                            <td class="py-2 px-4 border-b">不可公度量的分类与性质</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-4">第11-13卷</td>
+                                            <td class="py-2 px-4">立体几何，研究三维空间中的几何图形</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div id="non-euclidean">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">1.3 对非欧几何的启发</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何中的平行公设（第五公设）引发了数学家们长达两千多年的探索，最终导致了非欧几何的诞生。许多数学家尝试证明第五公设可由其他公设推导出来，但都没有成功。
+                            </p>
+                            <p class="leading-relaxed">
+                                19世纪，俄国数学家罗巴切夫斯基、匈牙利数学家鲍耶和德国数学家黎曼等人通过改变平行公设，创立了双曲几何和椭圆几何等非欧几何体系。这些新的几何体系不仅拓展了几何学的领域，还为爱因斯坦的广义相对论提供了数学基础。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 视觉分隔符 -->
+                <div class="section-divider"></div>
+
+                <!-- 第二部分：对数学其他领域的影响 -->
+                <section id="mathematics" class="mb-16 section-fade">
+                    <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-6 pb-2 border-b border-gray-100">
+                            <i class="fa fa-calculator text-accent mr-3"></i>对数学其他领域的影响
+                        </h2>
+                        
+                        <div class="relative rounded-lg overflow-hidden mb-8">
+                            <img src="https://picsum.photos/800/400?random=2" alt="欧几里得几何对数学其他领域的影响" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                                <p class="text-white p-4 text-sm">欧几里得的公理化方法和推理模式影响了整个数学的发展</p>
+                            </div>
+                        </div>
+                        
+                        <div id="methodology" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">2.1 数学方法论的革新</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何的公理化方法和演绎推理体系为整个数学领域提供了方法论范式。这种从基本公理出发，通过严格逻辑推理构建完整理论体系的方法，成为数学研究的标准模式。
+                            </p>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 my-6">
+                                <div class="bg-light rounded-lg p-5 border border-gray-100">
+                                    <h4 class="font-medium text-secondary mb-3">严格证明的传统</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得强调每个命题都必须经过严格证明，这一传统成为数学研究的核心规范，确保了数学知识的可靠性和精确性。
+                                    </p>
+                                </div>
+                                <div class="bg-light rounded-lg p-5 border border-gray-100">
+                                    <h4 class="font-medium text-secondary mb-3">定义的精确性</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得首先给出明确的定义，再基于这些定义进行推理，这种方法影响了数学概念的形成方式和表述方式。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="interdisciplinary" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">2.2 推动跨领域数学发展</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何的思想和方法对数学的多个分支产生了深远影响，促进了它们的形成和发展：
+                            </p>
+                            
+                            <div class="space-y-4 my-6">
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                        <i class="fa fa-line-chart fa-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-medium text-secondary">解析几何</h4>
+                                        <p class="text-sm text-gray-600">
+                                            笛卡尔和费马创立的解析几何，将几何问题转化为代数问题，其基础是欧几里得几何的图形表示和性质研究。
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                        <i class="fa fa-calculator fa-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-medium text-secondary">代数学</h4>
+                                        <p class="text-sm text-gray-600">
+                                            欧几里得的公理化方法影响了近世代数的发展，特别是群论、环论等代数结构的公理化定义和研究。
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                        <i class="fa fa-area-chart fa-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-medium text-secondary">拓扑学</h4>
+                                        <p class="text-sm text-gray-600">
+                                            从欧几里得几何对空间性质的研究，发展出对连续变换下不变性质的研究，形成了拓扑学这一重要数学分支。
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                        <i class="fa fa-cubes fa-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-medium text-secondary">微分几何</h4>
+                                        <p class="text-sm text-gray-600">
+                                            欧几里得几何为研究曲线和曲面的微分几何提供了基础，黎曼几何将其推广到更高维度和更一般的空间。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 视觉分隔符 -->
+                <div class="section-divider"></div>
+
+                <!-- 第三部分：对人类文明的深远意义 -->
+                <section id="civilization" class="mb-16 section-fade">
+                    <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-6 pb-2 border-b border-gray-100">
+                            <i class="fa fa-globe text-accent mr-3"></i>对人类文明的深远意义
+                        </h2>
+                        
+                        <div class="relative rounded-lg overflow-hidden mb-8">
+                            <img src="https://picsum.photos/800/400?random=3" alt="欧几里得几何对人类文明的影响" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                                <p class="text-white p-4 text-sm">欧几里得的理性精神影响了科学、哲学、教育等人类文明的多个方面</p>
+                            </div>
+                        </div>
+                        
+                        <div id="scientific" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">3.1 科学方法的奠基</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何的公理化方法为现代科学方法奠定了基础。这种从基本原理出发，通过逻辑推理构建知识体系的方法，成为科学研究的标准模式。
+                            </p>
+                            
+                            <div class="bg-light rounded-lg p-5 my-6 border-l-4 border-secondary">
+                                <p class="italic text-gray-700">
+                                    牛顿的《自然哲学的数学原理》就是以欧几里得《几何原本》为范本写成的，采用了从定义、公理到定理的演绎结构，建立了经典力学体系。
+                                </p>
+                            </div>
+                            
+                            <p class="leading-relaxed">
+                                欧几里得方法对科学发展的影响还体现在强调实证精神、精确测量和逻辑一致性等方面，这些都成为现代科学研究的基本准则。
+                            </p>
+                        </div>
+                        
+                        <div id="cultural" class="mb-8">
+                            <h3 class="text-xl font-semibold text-secondary mb-4">3.2 文化与教育的变革</h3>
+                            <p class="mb-4 leading-relaxed">
+                                欧几里得几何对西方文化和教育产生了深远影响。《几何原本》作为教科书使用了两千多年，是除了《圣经》之外影响最广泛的著作之一。
+                            </p>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 my-6">
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                    <h4 class="font-medium text-secondary mb-3">教育体系的核心</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得几何长期以来是西方教育的核心内容，被视为培养逻辑思维和理性精神的最佳途径，影响了从古希腊到现代的教育理念。
+                                    </p>
+                                </div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                    <h4 class="font-medium text-secondary mb-3">理性精神的传播</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得几何所体现的理性精神和逻辑思维，成为启蒙运动的思想基础之一，推动了理性主义在西方文化中的主导地位。
+                                    </p>
+                                </div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                    <h4 class="font-medium text-secondary mb-3">艺术与建筑的影响</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得几何的比例理论和对称性原则影响了西方艺术和建筑，从文艺复兴时期的绘画到古典建筑，都体现了几何美学的影响。
+                                    </p>
+                                </div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                    <h4 class="font-medium text-secondary mb-3">社会与政治思想</h4>
+                                    <p class="text-sm leading-relaxed">
+                                        欧几里得的公理化方法影响了社会契约论和宪法理论，启发思想家们从基本原理出发构建社会和政治理论体系。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-semibold text-secondary mb-4">3.3 历史影响时间线</h3>
+                            <div class="relative pl-10 pb-4">
+                                <div class="timeline-item relative mb-8">
+                                    <h4 class="font-medium text-primary">公元前300年</h4>
+                                    <p class="text-sm text-gray-600 mt-1">欧几里得编写《几何原本》，建立第一个完整的公理化几何体系</p>
+                                </div>
+                                
+                                <div class="timeline-item relative mb-8">
+                                    <h4 class="font-medium text-primary">公元3世纪</h4>
+                                    <p class="text-sm text-gray-600 mt-1">阿基米德应用欧几里得方法研究物理学，开创数学物理传统</p>
+                                </div>
+                                
+                                <div class="timeline-item relative mb-8">
+                                    <h4 class="font-medium text-primary">17世纪</h4>
+                                    <p class="text-sm text-gray-600 mt-1">笛卡尔创立解析几何，牛顿以欧几里得范式建立经典力学</p>
+                                </div>
+                                
+                                <div class="timeline-item relative mb-8">
+                                    <h4 class="font-medium text-primary">19世纪</h4>
+                                    <p class="text-sm text-gray-600 mt-1">非欧几何建立，希尔伯特完善公理化方法，影响现代数学基础</p>
+                                </div>
+                                
+                                <div class="timeline-item relative">
+                                    <h4 class="font-medium text-primary">20世纪至今</h4>
+                                    <p class="text-sm text-gray-600 mt-1">欧几里得几何思想影响计算机科学、人工智能和现代物理学</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fa fa-cube mr-2"></i>欧几里得几何研究
+                        </h3>
+                        <p class="text-blue-200 text-sm">探索几何学的历史、影响与现代意义</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors">
+                            <i class="fa fa-book"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors">
+                            <i class="fa fa-graduation-cap"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors">
+                            <i class="fa fa-share-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-blue-700 pt-6 text-center text-blue-200 text-sm">
+                    <p>© 2023 欧几里得几何研究 | 探索数学史上的伟大里程碑</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-accent text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-secondary">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单（如果打开）
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-lg');
+                navbar.classList.remove('py-3', 'shadow-md');
+            } else {
+                navbar.classList.add('py-3', 'shadow-md');
+                navbar.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 滚动时的元素淡入效果
+        const fadeElements = document.querySelectorAll('.section-fade');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('section-visible');
+                }
+            });
+        };
+        
+        // 初始检查可见元素
+        window.addEventListener('load', fadeInOnScroll);
+        // 滚动时检查可见元素
+        window.addEventListener('scroll', fadeInOnScroll);
+        
+        // 当前激活的导航项高亮
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        const highlightNavOnScroll = () => {
+            let scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('nav-active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('nav-active');
+                        }
+                    });
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', highlightNavOnScroll);
+        // 初始检查
+        window.addEventListener('load', highlightNavOnScroll);
+    </script>
+</body>
+</html>
+    
